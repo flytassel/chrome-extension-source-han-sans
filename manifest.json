@@ -1,0 +1,17 @@
+{
+  "name": "强制思源黑体",
+  "description": "将网页字体强制为思源黑体等黑体族。",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}
