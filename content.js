@@ -1,11 +1,12 @@
 (async function() {
   const hostname = window.location.hostname;
   
-  // 从 storage 中检查是否在排除名单中
-  const { excludedDomains = [] } = await chrome.storage.sync.get('excludedDomains');
+  // 从 storage 中获取白名单列表 (allowedDomains)
+  const { allowedDomains = [] } = await chrome.storage.sync.get('allowedDomains');
   
-  if (excludedDomains.includes(hostname)) {
-    console.log('[强制思源黑体] 当前网站在排除名单中，跳过字体注入。');
+  // 只有在白名单中的网站才会注入字体
+  if (!allowedDomains.includes(hostname)) {
+    console.log('[强制思源黑体] 当前网站不在白名单中，默认不启用字体替换。');
     return;
   }
 

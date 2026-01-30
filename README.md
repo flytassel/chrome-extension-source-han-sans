@@ -3,20 +3,15 @@
 A lightweight Chrome extension that forces web pages to use **Source Han Sans** (思源黑体) instead of default fonts like SimSun (宋体).
 
 ## Features
-- Forces font substitution for all web elements.
+- Forces font substitution for all web elements on whitelisted sites.
 - Prioritizes Source Han Sans and other high-quality sans-serif fonts.
 - Injects styles at `document_start` for a seamless experience.
-- **Website Exclusions**: Easily exclude specific websites (like Google Docs or GitHub) to maintain their original design.
+- **Whitelist Mode**: Extension is disabled by default. You can manually enable it for specific websites via the popup menu.
 
-## How to Exclude Websites
-If you find that this extension breaks the layout of certain websites, you can add their URLs to the `exclude_matches` section in `manifest.json`:
-
-```json
-"exclude_matches": [
-  "https://example.com/*",
-  "https://*.another-site.org/*"
-]
-```
+## How to Enable for Websites
+1. Visit a website you want to use Source Han Sans on.
+2. Click the extension icon.
+3. Click **Add to Whitelist (Enable)**. The page will reload and apply the font.
 
 ## How to Install
 1. Download or clone this repository.

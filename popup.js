@@ -9,35 +9,35 @@ document.addEventListener('DOMContentLoaded', async () => {
   const url = new URL(tab.url);
   const hostname = url.hostname;
 
-  // 从 storage 中获取排除名单
-  const { excludedDomains = [] } = await chrome.storage.sync.get('excludedDomains');
-  const isExcluded = excludedDomains.includes(hostname);
+  // 从 storage 中获取白名单列表 (allowedDomains)
+  const { allowedDomains = [] } = await chrome.storage.sync.get('allowedDomains');
+  const isAllowed = allowedDomains.includes(hostname);
 
-  updateUI(isExcluded, hostname);
+  updateUI(isAllowed, hostname);
 
   toggleBtn.addEventListener('click', async () => {
-    const { excludedDomains = [] } = await chrome.storage.sync.get('excludedDomains');
+    const { allowedDomains = [] } = await chrome.storage.sync.get('allowedDomains');
     let newList;
 
-    if (isExcluded) {
-      newList = excludedDomains.filter(d => d !== hostname);
+    if (isAllowed) {
+      newList = allowedDomains.filter(d => d !== hostname);
     } else {
-      newList = [...excludedDomains, hostname];
+      newList = [...allowedDomains, hostname];
     }
 
-    await chrome.storage.sync.set({ excludedDomains: newList });
+    await chrome.storage.sync.set({ allowedDomains: newList });
     window.close(); // 关闭弹出框
     chrome.tabs.reload(tab.id); // 刷新页面使更改生效
   });
 
-  function updateUI(excluded, host) {
-    if (excluded) {
-      statusDiv.textContent = `当前网站 (${host}) 已排除`;
-      toggleBtn.textContent = '从排除名单中移除';
+  function updateUI(allowed, host) {
+    if (allowed) {
+      statusDiv.textContent = `当前网站 (${host}) 已启用`;
+      toggleBtn.textContent = '从白名单中移除 (禁用)';
       toggleBtn.classList.add('remove');
     } else {
-      statusDiv.textContent = `当前网站 (${host}) 已启用`;
-      toggleBtn.textContent = '添加到排除名单';
+      statusDiv.textContent = `当前网站 (${host}) 已禁用`;
+      toggleBtn.textContent = '添加到白名单 (启用)';
       toggleBtn.classList.remove('remove');
     }
   }
